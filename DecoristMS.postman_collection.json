@@ -1,0 +1,589 @@
+{
+	"info": {
+		"_postman_id": "9b6c978f-cadf-4a79-9009-75a41195fb36",
+		"name": "DecoristMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "UserData",
+			"item": [
+				{
+					"name": "Users About Me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The response has all properties\", () => {\r",
+									"    //parse the response json and test properties\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"pm.test(\"Test data type of the response\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData.id).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData.uu_id).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData.email).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData.first_name).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData.last_name).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData.full_name).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData.icon).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData.groups).to.be.a(\"array\");\r",
+									"    pm.expect(jsonData.groups[0].name).to.be.a(\"string\");\r",
+									"});\r",
+									"pm.test(\"Test data of the response\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(data['id'] );\r",
+									"    pm.expect(jsonData.email).to.eql(data['email'])\r",
+									"    pm.expect(jsonData.uu_id).to.eql(data['uu_id']);\r",
+									"    pm.expect(jsonData.first_name).to.eql(data['first_name']);\r",
+									"    pm.expect(jsonData.last_name).to.eql(data['last_name']);\r",
+									"    pm.expect(jsonData.full_name).to.eql(data['full_name']);\r",
+									"    pm.expect(jsonData.icon).to.eql(data['Icon']);\r",
+									"});\r",
+									"pm.test(\"Test group names of the response\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    var ExpgroupNames = [data['groups_name1'], data['groups_name2'], data['groups_name3'], data['groups_name4']];\r",
+									"    //var Actgroupnames=new Array();\r",
+									"\r",
+									"    for (var i = 0;i<jsonData.groups.length;i++)\r",
+									"    {\r",
+									"    pm.expect(jsonData.groups[i].name).to.be.oneOf([data[\"groups_name1\"],data[\"groups_name2\"],data[\"groups_name3\"],data[\"groups_name4\"]]);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer uZVh1kppTUndBdMvmTGEr98etHmCkV",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://www.dev.decorist.com/api/v3/users/user/me",
+							"protocol": "http",
+							"host": [
+								"www",
+								"dev",
+								"decorist",
+								"com"
+							],
+							"path": [
+								"api",
+								"v3",
+								"users",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DesignSolutions",
+			"item": [
+				{
+					"name": "Get Sorted Design Solutions",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test sorted data of the response\", () => {\r",
+									"\r",
+									"  const jsonData = pm.response.json();\r",
+									"  for (var i = 0;i<jsonData.results.length-1;i++) {\r",
+									"    \r",
+									"    pm.expect(jsonData.results[i].id<jsonData.results[i+1].id).to.true;\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 6XKrhPbOVGajx3BtuHPxxLnbG5e7rE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://www.dev.decorist.com/api/v3/design-solutions/?page_size=10&page=1&ordering=id",
+							"protocol": "https",
+							"host": [
+								"www",
+								"dev",
+								"decorist",
+								"com"
+							],
+							"path": [
+								"api",
+								"v3",
+								"design-solutions",
+								""
+							],
+							"query": [
+								{
+									"key": "page_size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "ordering",
+									"value": "id"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Design Solutions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"TC-1: The response has all properties\", () => {\r",
+									"    //parse the response json and test properties\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"pm.test(\"TC-2: Check on response time\", () => {\r",
+									"    //parse the response json and test properties\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"pm.test(\"TC-3: Test data type of the response\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData.count).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData.results).to.be.a(\"array\");\r",
+									"    pm.expect(jsonData.results[0].id).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData.results[0].key).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData.results[0].uu_id).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData.results[0].client).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData.results[0].designer).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData.results[0].order).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData.results[0].target_item).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData.results[0].status).to.be.a(\"number\");\r",
+									"});\r",
+									"pm.test(\"TC-4: Test data of the response\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.count).to.eql(pm.iterationData.get(\"Count\"));\r",
+									"    pm.expect(jsonData.results[0].id).to.eql(pm.iterationData.get(\"results_id\"));\r",
+									"    pm.expect(jsonData.results[0].key).to.eql(pm.iterationData.get(\"results_key\"));\r",
+									"    pm.expect(jsonData.results[0].uu_id).to.eql(pm.iterationData.get(\"results_uu_id\"));\r",
+									"    pm.expect(jsonData.results[0].client).to.eql(pm.iterationData.get(\"results_client\"));\r",
+									"    pm.expect(jsonData.results[0].designer).to.eql(pm.iterationData.get(\"results_designer\"));\r",
+									"    pm.test(\"designer id from json is \"+ jsonData.results[0].designer);\r",
+									"    pm.test(\"designer id from CSV is \"+ pm.iterationData.get(\"results_designer\"));\r",
+									"    pm.expect(jsonData.results[0].order).to.eql(pm.iterationData.get(\"results_order\"));\r",
+									"    pm.expect(jsonData.results[0].target_item).to.eql(pm.iterationData.get(\"results_target_item\"));\r",
+									"    pm.expect(jsonData.results[0].status).to.eql(pm.iterationData.get(\"results_status\"));\r",
+									"});\r",
+									"pm.test(\"TC-5: Designer id check for all the designs\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    var i ;\r",
+									"    if(jsonData.count<=10)\r",
+									"    {\r",
+									"    for(i=0;i<=jsonData.count;i++)\r",
+									"    {\r",
+									"        pm.expect(jsonData.results[i].designer).to.eql(pm.iterationData.get(\"results_designer\"));\r",
+									"        pm.test(\"designer id for results\"+ [i] + \"is=\" + jsonData.results[i].designer);\r",
+									"    }\r",
+									"    }\r",
+									"    else if(jsonData.count>10)\r",
+									"    {\r",
+									"    for(i = 0;i<10;i++)\r",
+									"    {\r",
+									"        pm.expect(jsonData.results[i].designer).to.eql(pm.iterationData.get(\"results_designer\"));\r",
+									"    }\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 6XKrhPbOVGajx3BtuHPxxLnbG5e7rE"
+							}
+						],
+						"url": {
+							"raw": "http://www.dev.decorist.com/api/v3/design-solutions/",
+							"protocol": "http",
+							"host": [
+								"www",
+								"dev",
+								"decorist",
+								"com"
+							],
+							"path": [
+								"api",
+								"v3",
+								"design-solutions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pagination Links: Page1- Design Solution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Pagination check - page1\", () => {\r",
+									"    //parse the response json and test properties\r",
+									"    const jsonData = pm.response.json();\r",
+									"    var page_size= pm.variables.get(\"page_size\");\r",
+									"    pm.test(\"Max number of records displayed on a page :\"+page_size);\r",
+									"    pm.test(\"Count of total records from json is\"+jsonData.count);\r",
+									"    var count= jsonData.count;\r",
+									"    var numofpages= count/page_size; \r",
+									"   pm.test(\"Value of results currently displayed on the page is :\"+jsonData.results.length);\r",
+									"    var count= jsonData.count;\r",
+									"    var nextlink =\"https://www.dev.decorist.com/api/v3/design-solutions/?ordering=id&page=2&page_size=15\";\r",
+									"    var i;\r",
+									"    if(jsonData.results.length >page_size)\r",
+									"    {\r",
+									"        pm.test(\"Records to be displayed on page are more than page size\");\r",
+									"        pm.expect(jsonData.previous).eql(null);\r",
+									"        pm.expect(jsonData.next).eql(nextlink);\r",
+									"        pm.test(\"value of next link is \"+nextlink);\r",
+									"    }\r",
+									"    else if(jsonData.results.length < page_size)\r",
+									"    {\r",
+									"        pm.test(\"Records to be displayed on page are less than page size\");\r",
+									"        pm.expect(jsonData.previous).eql(null);\r",
+									"        pm.expect(jsonData.next).eql(null);\r",
+									"    }\r",
+									"    else if (jsonData.results.length =page_size && count >jsonData.results.length)\r",
+									"    {\r",
+									"      pm.test(\"Records to be displayed on page are same as page size\");\r",
+									"        pm.expect(jsonData.previous).eql(null);\r",
+									"        pm.expect(jsonData.next).eql(nextlink);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 6XKrhPbOVGajx3BtuHPxxLnbG5e7rE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://www.dev.decorist.com/api/v3/design-solutions/?page_size={{page_size}}&page=1&ordering=id",
+							"protocol": "https",
+							"host": [
+								"www",
+								"dev",
+								"decorist",
+								"com"
+							],
+							"path": [
+								"api",
+								"v3",
+								"design-solutions",
+								""
+							],
+							"query": [
+								{
+									"key": "page_size",
+									"value": "{{page_size}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "ordering",
+									"value": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pagination Links: Page3-Design Solution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Pagination check - Page3\", () => {\r",
+									"    //parse the response json and test properties\r",
+									"    const jsonData = pm.response.json();\r",
+									"    var page_size= pm.variables.get(\"page_size\");\r",
+									"    pm.test(\"Max number of records displayed on a page :\"+page_size);\r",
+									"    pm.test(\"Count of total records from json is\"+jsonData.count);\r",
+									"    var count= jsonData.count;\r",
+									"    var numofpages= count/page_size; \r",
+									"    //pm.test(\"value of pages \"+ numofpages );\r",
+									"    //AbsoluteNumber= Math.ceil(numofpages);\r",
+									"   // pm.test(\"Total Number of pages for record display: \" +AbsoluteNumber );\r",
+									"    var previouslink = \"https://www.dev.decorist.com/api/v3/design-solutions/?ordering=id&page=2&page_size=15\";\r",
+									"   pm.test(\"Value of results currently displayed on the page is :\"+jsonData.results.length);\r",
+									"    if(jsonData.results.length >= page_size)\r",
+									"    {\r",
+									"        pm.test(\"Records to be displayed on page are more than page size\");\r",
+									"        pm.expect(jsonData.next).not.null.to.true;\r",
+									"        pm.expect(jsonData.previous).eql(previouslink);\r",
+									"    }\r",
+									"    else if(jsonData.results.length < page_size)\r",
+									"    {\r",
+									"          pm.test(\"Records to be displayed on page are less than page size\");\r",
+									"        pm.expect(jsonData.previous).eql(previouslink);\r",
+									"        pm.expect(jsonData.next).eql(null);\r",
+									"    }\r",
+									"    else if (jsonData.results.length =page_size && count >jsonData.results.length)\r",
+									"    {\r",
+									"      pm.test(\"Records to be displayed on page are same as page size\");\r",
+									"        pm.expect(jsonData.previous).eql(previouslink);\r",
+									"        pm.expect(jsonData.next).eql(null);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 6XKrhPbOVGajx3BtuHPxxLnbG5e7rE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://www.dev.decorist.com/api/v3/design-solutions/?page_size={{page_size}}&page=3&ordering=id",
+							"protocol": "https",
+							"host": [
+								"www",
+								"dev",
+								"decorist",
+								"com"
+							],
+							"path": [
+								"api",
+								"v3",
+								"design-solutions",
+								""
+							],
+							"query": [
+								{
+									"key": "page_size",
+									"value": "{{page_size}}"
+								},
+								{
+									"key": "page",
+									"value": "3"
+								},
+								{
+									"key": "ordering",
+									"value": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sorted Design Solutions DESC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test sorted data of the response\", () => {\r",
+									"\r",
+									"  const jsonData = pm.response.json();\r",
+									"\r",
+									"  for (var i = 0;i<jsonData.results.length-1;i++) {\r",
+									"    \r",
+									"    pm.expect(jsonData.results[i].id>jsonData.results[i+1].id).to.true;\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 6XKrhPbOVGajx3BtuHPxxLnbG5e7rE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://www.dev.decorist.com/api/v3/design-solutions/?page_size=10&page=1&ordering=-id",
+							"protocol": "https",
+							"host": [
+								"www",
+								"dev",
+								"decorist",
+								"com"
+							],
+							"path": [
+								"api",
+								"v3",
+								"design-solutions",
+								""
+							],
+							"query": [
+								{
+									"key": "page_size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "ordering",
+									"value": "-id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pagination Links: Page2-Design Solution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Pagination check - page2\", () => {\r",
+									"    //parse the response json and test properties\r",
+									"    const jsonData = pm.response.json();\r",
+									"    var page_size= pm.variables.get(\"page_size\");\r",
+									"    pm.test(\"Max number of records displayed on a page :\"+page_size);\r",
+									"    pm.test(\"Count of total records from json is\"+jsonData.count);\r",
+									"    var count= jsonData.count;\r",
+									"    var numofpages= count/page_size; \r",
+									"   pm.test(\"Value of results currently displayed on the page is :\"+jsonData.results.length);\r",
+									"   var nextlink =\"https://www.dev.decorist.com/api/v3/design-solutions/?ordering=id&page=3&page_size=15\";\r",
+									"   var previouslink =\"https://www.dev.decorist.com/api/v3/design-solutions/?ordering=id&page_size=15\";\r",
+									"    if(jsonData.results.length > page_size)\r",
+									"    {\r",
+									"        pm.test(\"Records to be displayed on page are more than page size\");\r",
+									"        pm.expect(jsonData.next).eql(nextlink);\r",
+									"        pm.expect(jsonData.previous).eql(previouslink);\r",
+									"    }\r",
+									"    else if(jsonData.results.length < page_size)\r",
+									"    {\r",
+									"        pm.test(\"Records to be displayed on page are less than page size\");\r",
+									"        pm.expect(jsonData.previous).not.null.to.true;\r",
+									"        pm.expect(jsonData.next).eql(null);\r",
+									"    }\r",
+									"    else if (jsonData.results.length =page_size && count >jsonData.results.length)\r",
+									"    {\r",
+									"      pm.test(\"Records to be displayed on page are same as page size\");\r",
+									"        pm.expect(jsonData.previous).eql(previouslink);\r",
+									"        pm.expect(jsonData.next).eql(nextlink);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 6XKrhPbOVGajx3BtuHPxxLnbG5e7rE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://www.dev.decorist.com/api/v3/design-solutions/?page_size={{page_size}}&page=2&ordering=id",
+							"protocol": "https",
+							"host": [
+								"www",
+								"dev",
+								"decorist",
+								"com"
+							],
+							"path": [
+								"api",
+								"v3",
+								"design-solutions",
+								""
+							],
+							"query": [
+								{
+									"key": "page_size",
+									"value": "{{page_size}}"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "ordering",
+									"value": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
